@@ -1,23 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import React, {useState} from 'react';
+import MainInputs from './components/MainInputs';
+import GroundStructure from './components/GroundStructure';
 
 function App() {
+  const [mainData, setMainData] = useState({
+    userInput: [],
+    totalWater: 0,
+    throwWater: []
+  });
+
+  const message = () => {
+    return mainData.userInput.length === 0 
+      ? (<h1>Coloque los pilares y construya la estructura</h1 >) 
+      : (mainData.totalWater === 0 ? (<h1>Tire el agua</h1>) 
+      : (<h1>{`Quedaron atrapados ${mainData.totalWater} cubos de agua`}</h1>))
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <MainInputs mainData={mainData} handler={setMainData}/>
+      <GroundStructure mainData={mainData} />
+      {message()}
     </div>
   );
 }
